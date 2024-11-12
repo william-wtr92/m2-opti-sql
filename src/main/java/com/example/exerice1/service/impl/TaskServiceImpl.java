@@ -7,21 +7,17 @@ import com.example.exerice1.repository.ProjectRepository;
 import com.example.exerice1.repository.TaskRepository;
 import com.example.exerice1.repository.UserRepository;
 import com.example.exerice1.service.TaskService;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
+@AllArgsConstructor
 public class TaskServiceImpl implements TaskService {
-    @Autowired
+
     private TaskRepository taskRepository;
-
-    @Autowired
     private ProjectRepository projectRepository;
-
-    @Autowired
     private UserRepository userRepository;
-
-    @Autowired
     private TaskMapper taskMapper;
 
     @Override

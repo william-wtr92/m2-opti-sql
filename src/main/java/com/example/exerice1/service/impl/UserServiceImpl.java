@@ -5,15 +5,14 @@ import com.example.exerice1.entity.User;
 import com.example.exerice1.mapper.UserMapper;
 import com.example.exerice1.repository.UserRepository;
 import com.example.exerice1.service.UserService;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
+@AllArgsConstructor
 public class UserServiceImpl implements UserService {
-    @Autowired
     private UserRepository userRepository;
-
-    @Autowired
     private UserMapper userMapper;
 
     @Override

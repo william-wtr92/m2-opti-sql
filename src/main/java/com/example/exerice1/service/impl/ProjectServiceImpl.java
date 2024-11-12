@@ -9,6 +9,7 @@ import com.example.exerice1.repository.ProjectRepository;
 import com.example.exerice1.repository.TaskRepository;
 import com.example.exerice1.repository.UserRepository;
 import com.example.exerice1.service.ProjectService;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,17 +17,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@AllArgsConstructor
 public class ProjectServiceImpl implements ProjectService {
-    @Autowired
     private ProjectRepository projectRepository;
-
-    @Autowired
     private UserRepository userRepository;
-
-    @Autowired
     private TaskRepository taskRepository;
-
-    @Autowired
     private ProjectMapper projectMapper;
 
     @Override
