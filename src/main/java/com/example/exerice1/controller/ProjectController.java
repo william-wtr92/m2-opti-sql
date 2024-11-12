@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/projects")
 public class ProjectController {
@@ -39,5 +41,19 @@ public class ProjectController {
         projectService.deleteProject(id);
 
         return ResponseEntity.ok("Project deleted");
+    }
+
+    @GetMapping("/name")
+    public ResponseEntity<List<ProjectDto>> getProjectByName(@RequestBody ProjectDto projectDto) {
+        List<ProjectDto> projectList = projectService.getProjectByName(projectDto);
+
+        return ResponseEntity.ok(projectList);
+    }
+
+    @GetMapping("/description")
+    public ResponseEntity<List<ProjectDto>> getProjectByDescription(@RequestBody ProjectDto projectDto) {
+        List<ProjectDto> projectList = projectService.getProjectByDescription(projectDto);
+
+        return ResponseEntity.ok(projectList);
     }
 }

@@ -10,7 +10,7 @@ import com.example.exerice1.repository.TaskRepository;
 import com.example.exerice1.repository.UserRepository;
 import com.example.exerice1.service.ProjectService;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -76,6 +76,24 @@ public class ProjectServiceImpl implements ProjectService {
         project.setUsers(null);
 
         projectRepository.delete(project);
+    }
+
+    @Override
+    public List<ProjectDto> getProjectByName(ProjectDto projectDto) {
+        Example<Project> example = Example.of(projectMapper.toEntity(projectDto));
+
+        return projectRepository.findAll(example).stream()
+                .map(projectMapper::toDto)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<ProjectDto> getProjectByDescription(ProjectDto projectDto) {
+        List<Project> projects = projectRepository.findByNameContainingOrDescriptionContaining(projectDto.getName(), projectDto.getDescription());
+
+        return projects.stream()
+                .map(projectMapper::toDto)
+                .collect(Collectors.toList());
     }
 
 
