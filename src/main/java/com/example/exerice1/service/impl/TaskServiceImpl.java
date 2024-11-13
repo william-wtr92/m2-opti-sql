@@ -2,14 +2,21 @@ package com.example.exerice1.service.impl;
 
 import com.example.exerice1.dto.TaskDto;
 import com.example.exerice1.entity.Task;
+import com.example.exerice1.mapper.ProjectTaskCountMapper;
 import com.example.exerice1.mapper.TaskMapper;
 import com.example.exerice1.repository.ProjectRepository;
+import com.example.exerice1.repository.ProjectTaskCountRepository;
 import com.example.exerice1.repository.TaskRepository;
 import com.example.exerice1.repository.UserRepository;
 import com.example.exerice1.service.TaskService;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @AllArgsConstructor
@@ -38,6 +45,7 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
+    @CachePut(value = "tasks", key = "#id")
     public void updateTask(Long id, TaskDto taskDto) {
         Task task = taskRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Task with ID " + id + " not found"));
@@ -59,6 +67,7 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
+    @Cacheable(value = "tasks", key = "#id")
     public void deleteTask(Long id) {
         Task task = taskRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Task with ID " + id + " not found"));
@@ -72,6 +81,13 @@ public class TaskServiceImpl implements TaskService {
                 .orElseThrow(() -> new IllegalArgumentException("Task with ID " + id + " not found"));
 
         return taskMapper.toDto(task);
+    }
+
+    @Override
+    @Cacheable("tasks")
+    public Page<TaskDto> findByTitle(String title, Pageable pageable) {
+        Page<Task> tasks = taskRepository.findByTitle(title, pageable);
+        return tasks.map(taskMapper::toDto);
     }
 
 }

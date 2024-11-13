@@ -8,7 +8,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "tasks")
+@Table(name = "tasks", indexes = {
+        @Index(name = "idx_task_title", columnList = "title")
+})
 
 @Getter
 @Setter
@@ -24,17 +26,11 @@ public class Task {
 
     private TaskStatus status;
 
-    @ManyToOne
-    @JoinColumn(
-            name = "project_id",
-            referencedColumnName = "id"
-    )
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "project_id", referencedColumnName = "id")
     private Project project;
 
-    @OneToOne
-    @JoinColumn(
-            name = "user_id",
-            referencedColumnName = "id"
-    )
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 }

@@ -1,11 +1,14 @@
 package com.example.exerice1.service.impl;
 
 import com.example.exerice1.dto.ProjectDto;
+import com.example.exerice1.dto.ProjectTaskCountDto;
 import com.example.exerice1.entity.Project;
 import com.example.exerice1.entity.Task;
 import com.example.exerice1.entity.User;
 import com.example.exerice1.mapper.ProjectMapper;
+import com.example.exerice1.mapper.ProjectTaskCountMapper;
 import com.example.exerice1.repository.ProjectRepository;
+import com.example.exerice1.repository.ProjectTaskCountRepository;
 import com.example.exerice1.repository.TaskRepository;
 import com.example.exerice1.repository.UserRepository;
 import com.example.exerice1.service.ProjectService;
@@ -22,7 +25,9 @@ public class ProjectServiceImpl implements ProjectService {
     private ProjectRepository projectRepository;
     private UserRepository userRepository;
     private TaskRepository taskRepository;
+    private ProjectTaskCountRepository projectTaskCountRepository;
     private ProjectMapper projectMapper;
+    private ProjectTaskCountMapper projectTaskCountMapper;
 
     @Override
     public void createProject(ProjectDto projectDto) {
@@ -96,6 +101,13 @@ public class ProjectServiceImpl implements ProjectService {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public List<ProjectTaskCountDto> getAllProjectTaskCounts() {
+        return projectTaskCountRepository.findAll().stream()
+                .map(projectTaskCountMapper::toDto)
+                .collect(Collectors.toList());
+    }
+
 
     private void updateUsers(Project project, ProjectDto projectDto) {
         List<User> users = projectDto.getUsers().stream()
@@ -128,4 +140,5 @@ public class ProjectServiceImpl implements ProjectService {
             }
         });
     }
+
 }

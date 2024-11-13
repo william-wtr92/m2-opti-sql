@@ -1,6 +1,7 @@
 package com.example.exerice1.controller;
 
 import com.example.exerice1.dto.ProjectDto;
+import com.example.exerice1.dto.ProjectTaskCountDto;
 import com.example.exerice1.service.ProjectService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,5 +56,11 @@ public class ProjectController {
         List<ProjectDto> projectList = projectService.getProjectByDescription(projectDto);
 
         return ResponseEntity.ok(projectList);
+    }
+
+    @GetMapping("/count-task")
+    public ResponseEntity<List<ProjectTaskCountDto>> getAllProjectTaskCounts() {
+        List<ProjectTaskCountDto> taskCounts = projectService.getAllProjectTaskCounts();
+        return ResponseEntity.ok(taskCounts);
     }
 }

@@ -1,6 +1,7 @@
 package com.example.exerice1.service;
 
 import com.example.exerice1.dto.ProjectDto;
+import com.example.exerice1.dto.ProjectTaskCountDto;
 
 import java.util.List;
 
@@ -11,4 +12,5 @@ public interface ProjectService {
     void deleteProject(Long id);
     List<ProjectDto> getProjectByName(ProjectDto projectDto);
     List<ProjectDto> getProjectByDescription(ProjectDto projectDto);
+    List<ProjectTaskCountDto> getAllProjectTaskCounts();
 }

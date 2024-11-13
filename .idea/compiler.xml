@@ -11,7 +11,7 @@
         <module name="m2-opti-sql.main" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
+    <bytecodeTargetLevel target="21">
       <module name="exercice1" target="21" />
       <module name="exercice1.main" target="21" />
       <module name="exercice1.test" target="21" />
