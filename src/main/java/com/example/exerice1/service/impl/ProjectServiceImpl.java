@@ -42,6 +42,7 @@ public class ProjectServiceImpl implements ProjectService {
         }
 
         projectRepository.save(project);
+        projectTaskCountRepository.refreshMaterializedView();
     }
 
     @Override
@@ -63,6 +64,7 @@ public class ProjectServiceImpl implements ProjectService {
         }
 
         projectRepository.save(project);
+        projectTaskCountRepository.refreshMaterializedView();
     }
 
     @Override
@@ -81,6 +83,7 @@ public class ProjectServiceImpl implements ProjectService {
         project.setUsers(null);
 
         projectRepository.delete(project);
+        projectTaskCountRepository.refreshMaterializedView();
     }
 
     @Override
