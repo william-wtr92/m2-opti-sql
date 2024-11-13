@@ -15,6 +15,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @AllArgsConstructor
 public class TaskServiceImpl implements TaskService {
@@ -86,9 +88,9 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     @Cacheable("tasks")
-    public Page<TaskDto> findByTitle(String title, Pageable pageable) {
+    public List<TaskDto> findByTitle(String title, Pageable pageable) {
         Page<Task> tasks = taskRepository.findByTitle(title, pageable);
-        return tasks.map(taskMapper::toDto);
+        return tasks.map(taskMapper::toDto).getContent();
     }
 
 }
