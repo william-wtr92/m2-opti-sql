@@ -2,7 +2,6 @@ package com.example.exerice1.service.impl;
 
 import com.example.exerice1.dto.TaskDto;
 import com.example.exerice1.entity.Task;
-import com.example.exerice1.mapper.ProjectTaskCountMapper;
 import com.example.exerice1.mapper.TaskMapper;
 import com.example.exerice1.repository.ProjectRepository;
 import com.example.exerice1.repository.ProjectTaskCountRepository;
@@ -16,14 +15,13 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
 @AllArgsConstructor
 public class TaskServiceImpl implements TaskService {
 
     private TaskRepository taskRepository;
     private ProjectRepository projectRepository;
+    private ProjectTaskCountRepository projectTaskCountRepository;
     private UserRepository userRepository;
     private TaskMapper taskMapper;
 
@@ -42,6 +40,7 @@ public class TaskServiceImpl implements TaskService {
         }
 
         taskRepository.save(task);
+        projectTaskCountRepository.refreshMaterializedView();
     }
 
     @Override
@@ -64,6 +63,7 @@ public class TaskServiceImpl implements TaskService {
         }
 
         taskRepository.save(task);
+        projectTaskCountRepository.refreshMaterializedView();
     }
 
     @Override
@@ -73,6 +73,7 @@ public class TaskServiceImpl implements TaskService {
                 .orElseThrow(() -> new IllegalArgumentException("Task with ID " + id + " not found"));
 
         taskRepository.delete(task);
+        projectTaskCountRepository.refreshMaterializedView();
     }
 
     @Override
